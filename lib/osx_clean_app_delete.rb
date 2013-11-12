@@ -1,5 +1,5 @@
 require_relative "osx_clean_app_delete/version"
-require_relative "osx_clean_app_delete/osx_clean_app_delete/osx_clean_app_delete_cli.rb"
+require_relative "osx_clean_app_delete/osx_clean_app_delete/osx_clean_app_delete_cli"
 
 module OsxCleanAppDelete
   # https://github.com/geemus/formatador
@@ -9,7 +9,6 @@ module OsxCleanAppDelete
   begin 
     OsxCleanAppDeleteCli.start(ARGV)
   rescue SystemExit, SignalException, Interrupt
-    puts "\n--- SystemExit ---\n\n"
-    # make colorful
+    # puts "\n--- SystemExit ---\n\n"
   end
 end

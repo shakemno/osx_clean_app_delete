@@ -12,7 +12,7 @@ class Thor
       end
     rescue UndefinedCommandError => e
         # do nothing
-        puts"---> #{e.message}"
+        puts"!!! #{e.message}"
         self.start(["help"])
         exit
     end
@@ -37,7 +37,7 @@ class Thor
         meth.to_s.gsub('-','_') # treat foo-bar as foo_bar
       rescue ArgumentError => e
         # do nothing
-        puts"--> #{e.message}"
+        puts"!!! #{e.message}"
         "help"
       end
       alias normalize_task_name normalize_command_name
