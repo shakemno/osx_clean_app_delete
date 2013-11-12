@@ -1,0 +1,12 @@
+#! /usr/bin/env ruby
+
+require_relative "../lib/osx_clean_app_delete/version"
+require_relative "../lib/osx_clean_app_delete/osx_clean_app_delete/osx_clean_app_delete_cli"
+
+module OsxCleanAppDelete
+  begin 
+    OsxCleanAppDeleteCli.start(ARGV)
+  rescue SystemExit, SignalException, Interrupt
+    #
+  end
+end

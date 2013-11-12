@@ -6,4 +6,6 @@ describe OsxCleanAppDelete do
     OsxCleanAppDelete::OsxCleanAppDeleteCli.start(["version"]).wont_be_nil
   end
  
+  # make test like this...
+  # http://guides.rubygems.org/make-your-own-gem/#adding-an-executable
 end

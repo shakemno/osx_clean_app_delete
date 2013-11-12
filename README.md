@@ -2,6 +2,8 @@
 
 TODO: Write a gem description
 
+Gem finds osx app bundle releated files and opts to delete them
+
 ## Installation
 
 Add this line to your application's Gemfile:
