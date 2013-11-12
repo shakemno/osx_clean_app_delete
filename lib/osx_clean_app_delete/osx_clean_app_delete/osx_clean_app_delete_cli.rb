@@ -31,9 +31,13 @@ module OsxCleanAppDelete
       
     # method_option :force, :aliases => "-f", :type => :boolean, :desc => "Only ask once before deleting all files."
 
+    desc "version", "Display gem version"
+    def version
+      say "[Version: #{OsxCleanAppDelete::VERSION}]", :yellow
+    end
+
     desc "get [APP-PATH]", "list files belonging to app"
     def get(appname)
-      
       # check if this is a file
       say_executing "Checking if '#{appname.shellescape}' is a valid app bundle"
 
