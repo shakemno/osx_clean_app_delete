@@ -1,6 +1,6 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
- require 'rake/testtask'
+require 'rake/testtask'
  
 Rake::TestTask.new do |t|
   t.libs << 'lib/osx_clean_app_delete'
