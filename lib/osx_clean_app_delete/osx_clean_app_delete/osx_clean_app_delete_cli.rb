@@ -54,7 +54,6 @@ module OsxCleanAppDelete
         say_success "CFBundleIdentifier: #{app_bundle}"
 
         files_to_delete = []
-        files_to_delete << appname
 
         # list of dirs to check
         search_dirs = ["~/Library"]
@@ -80,14 +79,15 @@ module OsxCleanAppDelete
         time = Benchmark.measure {
           # search for appname & bundle name
           app_locations = `#{search_command}`.split("\n")
-
+          
           app_locations.each do |loc|
             files_to_delete << loc
           end
-
         }
         OsxCleanAppDelete.simple_preloader_stop(preloader)
         say_superverbose "Benchmark: #{time}"
+
+        files_to_delete << appname
 
         present_files files_to_delete
       else
@@ -111,19 +111,37 @@ module OsxCleanAppDelete
 
       def delete_files(files)
         
-        delete_all_files = ask( set_color "Delete all file(s) [yes]:", :red, :on_white) if options[:force]
+        mark_all_files = ask( set_color "Mark all file(s) [yes]:", :red, :on_white) if options[:force]
+
+        files_to_delete = []
 
         files.each do |file|
-          delete = delete_all_files || ask( set_color "Delete #{file} ? [yes]:", :red, :on_white)
-          case delete
-          when "yes"
-            say_executing "Deleting... '#{file}'"
-            tell_delete file
-            `rm -r "#{file}"`
+          mark = mark_all_files=="yes" || ask( set_color "Mark to delete #{file} ? [yes]:", :red, :on_white)
+          puts "mark: #{mark}"
+          case mark
+          when "yes", true
+            files_to_delete << file
+            say_executing "Marked file to delete... '#{file}'"
           else
-            say_executing "Cancelled deleting... '#{file}'"
+            say_executing "Not marked file to delete... '#{file}'"
           end
         end
+
+        fail if files_to_delete.count < 1
+
+        really_delete = ask( set_color "Delete file(s) permanently? [yes] (default /.Trash):", :red, :on_white) if options[:force]
+
+        files_to_delete.each do |file|
+            tell_delete file
+            if really_delete == "yes" 
+              `rm -r "#{file}"`
+              say_executing "Deleted '#{file}'"
+            else
+              `mv #{file.shellescape} ~/.Trash/`
+              say_executing "Moved '#{file}' to Trash"
+            end
+        end
+
         say "[Done]", :green if options[:verbose] || options[:superverbose]
 
       end
