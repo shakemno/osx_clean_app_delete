@@ -129,7 +129,7 @@ module OsxCleanAppDelete
 
         fail if files_to_delete.count < 1
 
-        really_delete = ask( set_color "Delete file(s) permanently? [yes] (default /.Trash):", :red, :on_white) if options[:force]
+        really_delete = ask( set_color "Delete file(s) permanently? [yes] (default /.Trash):", :red, :on_white)
 
         files_to_delete.each do |file|
             tell_delete file
